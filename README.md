@@ -27,6 +27,61 @@ This Python script automates the renaming of Adobe CC Library assets using their
 ## **📋 Prerequisites**
 - **Python 3.6+** ([Download Python](https://www.python.org/downloads/))
 - **Unzipped Adobe CC Libraries** (Folders containing `manifest` files)
+Here’s the updated **Step 2** in your GitHub tutorial, now including instructions for unzipping `.cclibs` files using **The Unarchiver**:
+
+---
+
+## **⚙️ Setup**
+### **1. Clone or Download the Script**
+```bash
+git clone https://github.com/yourusername/adobe-cc-renamer.git
+cd adobe-cc-renamer
+```
+
+### **2. Install The Unarchiver & Extract `.cclibs` Files**
+#### **For macOS:**
+1. **Install [The Unarchiver](https://theunarchiver.com/)** (Free tool for `.cclibs` files):
+   ```bash
+   brew install --cask theunarchiver  # If using Homebrew
+   ```
+   *Or download manually from [their website](https://theunarchiver.com/).*
+
+2. **Unzip `.cclibs` files**:
+   - Right-click your `.cclibs` file → **Open With** → **The Unarchiver**.
+   - The tool will extract the folder (e.g., `Africa Family Safari 2025/` with a `manifest` file inside).
+
+#### **Alternative (Terminal):**
+If you prefer command-line extraction:
+```bash
+brew install unzip  # If needed
+unzip "YourLibrary.cclibs" -d "/path/to/output_folder"
+```
+
+### **3. Organize Your Folders**
+Place all unzipped Adobe CC libraries in one directory (e.g., `Adobe cc`):
+```
+/Users/you/Desktop/other/Adobe cc/
+├── Africa Family Safari 2025/  # ← Unzipped .cclibs
+│   ├── (UUID-named folders)
+│   └── manifest
+├── Yellowstone 2026/           # ← Unzipped .cclibs
+│   ├── (UUID-named folders)
+│   └── manifest
+└── ...
+```
+
+---
+
+### **Why The Unarchiver?**
+- Adobe `.cclibs` files are **special ZIP archives** with metadata.
+- The Unarchiver handles them correctly (unlike macOS Archive Utility).
+- Ensures the `manifest` file is preserved.
+
+---
+
+### **Updated Workflow Summary**
+1. **Unzip** `.cclibs` → Get folders with `manifest` files.  
+2. **Run script** → Renames assets in bulk.  
 
 ---
 
