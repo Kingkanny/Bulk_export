@@ -12,7 +12,6 @@ This Python script automates the renaming of Adobe CC Library assets using their
 5. [Customization](#-customization)
 6. [Output Structure](#-output-structure)
 7. [Troubleshooting](#-troubleshooting)
-8. [License](#-license)
 
 ---
 
@@ -127,11 +126,6 @@ Adobe_Renamed_Libraries/
   cd /path/to/adobe-cc-renamer
   python3 bulk_adobe_processor.py
   ```
-
----
-
-## **📜 License**
-MIT License. Feel free to modify and distribute.
 
 ---
 
