@@ -88,8 +88,8 @@ Place all unzipped Adobe CC libraries in one directory (e.g., `Adobe cc`):
 ## **⚙️ Setup**
 ### **1. Clone or Download the Script**
 ```bash
-git clone https://github.com/yourusername/adobe-cc-renamer.git
-cd adobe-cc-renamer
+git clone https://github.com/kingkanny/bulk_export.git
+cd bulk_export
 ```
 
 ### **2. Install Dependencies**
