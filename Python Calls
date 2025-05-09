@@ -1,0 +1,3 @@
+Call for 
+
+find "/Volumes/Evangelion/Event Photos" -type d -depth 1 -exec basename {} \; > ~/Desktop/folder_names.csv
