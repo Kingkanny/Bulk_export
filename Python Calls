@@ -35,4 +35,90 @@ cd "/Volumes/Evangelion/Promotional copy"
 done < ~/Desktop/folder_rename_list_2.csv
 
 
+BULK UPLOAD TO CLOUD
+
+#!/usr/bin/env python3
+# cloudinary_bulk_upload.py
+
+import os
+import sys
+import cloudinary
+import cloudinary.uploader
+from pathlib import Path
+
+# Cloudinary credentials
+CLOUDINARY_CLOUD_NAME = "xxxxx"
+CLOUDINARY_API_KEY = "xxxxx"
+CLOUDINARY_API_SECRET = "xxxx"
+
+# Configure Cloudinary
+try:
+    cloudinary.config(
+        cloud_name=CLOUDINARY_CLOUD_NAME,
+        api_key=CLOUDINARY_API_KEY,
+        api_secret=CLOUDINARY_API_SECRET
+    )
+except Exception as e:
+    print(f"Error configuring Cloudinary: {str(e)}")
+    sys.exit(1)
+
+# Root directory to scan
+ROOT_DIR = '/Volumes/Evangelion/Promotional/Events/Local/'
+
+def replace_dash_colon(path_string):
+    """Replace -COLON- with : in a path string"""
+    return path_string.replace("-COLON-", ": ")
+
+def scan_directory(directory, cloudinary_base_path=''):
+    """Recursively scan directories and upload files to Cloudinary"""
+    try:
+        for item in os.listdir(directory):
+            item_path = os.path.join(directory, item)
+
+            # Skip hidden files
+            if item.startswith('.'):
+                continue
+
+            if os.path.isdir(item_path):
+                relative_path = os.path.relpath(item_path, ROOT_DIR)
+                cloudinary_path = relative_path.replace(os.sep, '/')
+                print(f"Processing directory: {relative_path}")
+                scan_directory(item_path, cloudinary_path)
+            else:
+                # Replace -COLON- with : in both folder and file names
+                if cloudinary_base_path:
+                    cloudinary_file_path = f"{replace_dash_colon(cloudinary_base_path)}/{replace_dash_colon(item)}"
+                else:
+                    cloudinary_file_path = replace_dash_colon(item)
+
+                if '/' in cloudinary_file_path:
+                    folder_path = f"Promotional/Events/Local/{cloudinary_file_path.rsplit('/', 1)[0]}"
+                else:
+                    folder_path = "Promotional/Events/Local"
+
+                print(f"Uploading: {item_path} to {cloudinary_file_path}")
+                try:
+                    result = cloudinary.uploader.upload(
+                        item_path,
+                        folder=folder_path,
+                        use_filename=True,
+                        unique_filename=False
+                    )
+                    print(f"✅ Uploaded to: {result['public_id']}")
+                except Exception as e:
+                    print(f"❌ Error uploading {item_path}: {str(e)}")
+
+    except Exception as e:
+        print(f"Error scanning directory {directory}: {str(e)}")
+
+def main():
+    print(f"📂 Starting bulk upload from {ROOT_DIR} to Cloudinary...")
+    scan_directory(ROOT_DIR)
+    print("✅ Bulk upload complete!")
+
+if __name__ == "__main__":
+    main()
+
+
+
 
