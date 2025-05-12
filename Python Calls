@@ -1,3 +1,38 @@
 ### **1. Make list**
 
 find "/Volumes/Evangelion/Event Photos" -type d -depth 1 -exec basename {} \; > ~/Desktop/folder_names.csv
+
+
+
+Update nameing conventions
+
+
+cd "/Volumes/Evangelion/test"
+
+cd "/Volumes/Evangelion/Promotional copy"
+
+
+% while IFS=, read -r old new; do
+  [ "$old" = "old_name" ] && continue
+
+  # Clean new name
+  clean_new=$(echo "$new" | tr -d '\r' | sed 's/^ *//;s/ *$//' | tr -d '"')
+
+  # Get directory and final folder name from clean_new
+  subdir=$(dirname "$clean_new")
+  final_name=$(basename "$clean_new")
+
+  # Make subdirectory if needed
+  mkdir -p "$subdir"
+
+  # Move the old folder to the new nested path
+  if [ -d "$old" ]; then
+    mv "$old" "$subdir/$final_name"
+    echo "Renamed: $old -> $subdir/$final_name"
+  else
+    echo "Folder not found: $old"
+  fi
+done < ~/Desktop/folder_rename_list_2.csv
+
+
+
